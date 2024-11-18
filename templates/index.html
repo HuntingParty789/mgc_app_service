@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Genre Classification</title>
+</head>
+<body>
+    <h1>Real-Time Genre Classification</h1>
+    <button onclick="recordAndClassify()">Record and Classify</button>
+    <button onclick="saveRecording()">Save Recording</button>
+    <button onclick="playRecording()">Play Recording</button>
+    <p id="result"></p>
+
+    <script>
+         async function recordAndClassify() {
+            const response = await fetch('/record', { method: "POST" });
+            const data = await response.json();
+            document.getElementById('result').innerText = `Predicted Genre: ${data.genre} \nConfidence: ${data.confidence.toFixed(2)}%`;
+        } 
+
+        async function saveRecording() {
+            const response = await fetch('/save', { method: "POST" });
+            const data = await response.json();
+            if (response.ok) {
+                alert(data.message);
+            } else {
+                alert(data.error);
+            }
+        } 
+
+        async function playRecording() {
+            const response = await fetch('/play', { method: "POST" });
+            const data = await response.json();
+            if (response.ok) {
+                alert(data.message);
+            } else {
+                alert(data.error);
+            }
+        } 
+    </script>
+</body>
+</html>
